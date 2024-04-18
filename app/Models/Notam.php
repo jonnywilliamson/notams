@@ -11,6 +11,8 @@ class Notam extends Model
 {
     use HasFactory;
 
+    public $table = 'tagged_notams';
+
     public $incrementing = false;
 
     public $keyType = 'string';

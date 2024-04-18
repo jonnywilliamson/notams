@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Actions\Taggers\PretendNotamTagger;
 use App\Contracts\NotamTagger;
 use App\Enum\LLM;
 use App\Enum\NotamStatus;
@@ -25,6 +26,8 @@ class NotamTagJob implements ShouldQueue
 
     protected int $startTime;
 
+    protected NotamTagger $tagger;
+
     public function __construct(protected readonly Notam $notam, protected readonly LLM $llm)
     {
         $this->onQueue('tagging');
@@ -32,10 +35,11 @@ class NotamTagJob implements ShouldQueue
 
     public function handle(NotamTagger $tagger): void
     {
+        $this->tagger = $tagger;
         $this->startTime = hrtime(true);
 
         try {
-            $tagger
+            $this->tagger
                 ->setLLM($this->llm)
                 ->tag($this->notam);
         } catch (TaggingConnectionException $connectionException) {
@@ -78,6 +82,11 @@ class NotamTagJob implements ShouldQueue
      */
     protected function simpleRateLimit(): void
     {
+        //No delay when using the pretend tagger.
+        if ($this->tagger instanceof PretendNotamTagger) {
+            return;
+        }
+
         $totalTime = (hrtime(true) - $this->startTime) / 1e3; // convert to microseconds
 
         if ($totalTime < 2000000) {

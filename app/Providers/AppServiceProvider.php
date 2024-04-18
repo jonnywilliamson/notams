@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
-use App\Actions\NotamICAOFetcher;
-use App\Actions\NotamOpenAiTagger;
-use App\Contracts\NotamFetcher;
+use App\Actions\Fetchers\FNSNotamFetcher;
+use App\Actions\Fetchers\ICAONotamFetcher;
+use App\Actions\Taggers\PretendNotamTagger;
 use App\Contracts\NotamTagger;
+use App\Contracts\PullNotamFetcher;
+use App\Contracts\PushNotamFetcher;
 use App\Models\User;
 use Gate;
 use Illuminate\Support\ServiceProvider;
@@ -13,8 +15,9 @@ use Illuminate\Support\ServiceProvider;
 class AppServiceProvider extends ServiceProvider
 {
     public array $bindings = [
-        NotamFetcher::class => NotamICAOFetcher::class,
-        NotamTagger::class  => NotamOpenAiTagger::class,
+        PushNotamFetcher::class => FNSNotamFetcher::class,
+        PullNotamFetcher::class => ICAONotamFetcher::class, //not in use anymore
+        NotamTagger::class      => PretendNotamTagger::class,
     ];
 
     public array $singletons = [

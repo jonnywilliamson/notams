@@ -4,7 +4,7 @@ namespace App\DTO;
 
 use Spatie\LaravelData\Data;
 
-class StandardNotam extends Data
+class NormalisedNotam extends Data
 {
     public function __construct(
         public string $id,

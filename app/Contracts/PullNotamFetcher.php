@@ -2,16 +2,16 @@
 
 namespace App\Contracts;
 
-use App\DTO\StandardNotam;
+use App\DTO\NormalisedNotam;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;
-use Log;
-use Storage;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
-abstract class NotamFetcher
+abstract class PullNotamFetcher
 {
     /**
-     * @return Collection<int, StandardNotam>
+     * @return Collection<int, NormalisedNotam>
      */
     abstract public function get(Collection $icaoLocations): Collection;
 

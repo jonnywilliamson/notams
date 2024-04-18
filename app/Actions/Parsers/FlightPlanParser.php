@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Parsers;
 
 use App\DTO\AtcFlightPlan;
 use App\Enum\Airports;

@@ -2,10 +2,10 @@
 
 namespace App\Jobs;
 
-use App\Actions\FlightPlanParser;
 use App\Actions\NotamFilter;
+use App\Actions\Parsers\FlightPlanParser;
 use App\Actions\PDFCreator;
-use App\Contracts\NotamFetcher;
+use App\Contracts\PullNotamFetcher;
 use App\DTO\AtcFlightPlan;
 use App\Events\NotamProcessingEvent;
 use App\Events\NotamResultEvent;
@@ -30,7 +30,7 @@ class NotamProcessingJob implements ShouldQueue
 
     public function handle(
         FlightPlanParser $fpParser,
-        NotamFetcher $notamFetcher,
+        PullNotamFetcher $notamFetcher,
         NotamFilter $notamFilter,
         PDFCreator $PDFCreator,
     ): void {

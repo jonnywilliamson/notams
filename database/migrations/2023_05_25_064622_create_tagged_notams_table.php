@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('notams', function (Blueprint $table) {
+        Schema::create('tagged_notams', function (Blueprint $table) {
             $table->string('id', 20)->unique();
             $table->longText('fullText')->nullable();
             $table->string('code', 2)->nullable();
@@ -23,6 +23,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('notams');
+        Schema::dropIfExists('tagged_notams');
     }
 };

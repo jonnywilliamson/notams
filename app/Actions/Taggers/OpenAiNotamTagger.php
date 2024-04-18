@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Taggers;
 
 use App\Contracts\NotamTagger;
 use App\DTO\TagData;
@@ -15,7 +15,7 @@ use Log;
 use OpenAI\Exceptions\TransporterException;
 use OpenAI\Laravel\Facades\OpenAI;
 
-class NotamOpenAiTagger extends NotamTagger
+class OpenAiNotamTagger extends NotamTagger
 {
     protected Notam $notam;
 

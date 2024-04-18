@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Fetchers;
 
-use App\Contracts\NotamFetcher;
-use App\DTO\StandardNotam;
+use App\Contracts\PullNotamFetcher;
+use App\DTO\NormalisedNotam;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 
-class NotamICAOFetcher extends NotamFetcher
+class ICAONotamFetcher extends PullNotamFetcher
 {
     /**
-     * @return Collection<int, StandardNotam>
+     * @return Collection<int, NormalisedNotam>
      */
     public function get(Collection $icaoLocations): Collection
     {
@@ -35,12 +35,12 @@ class NotamICAOFetcher extends NotamFetcher
     }
 
     /**
-     * @return Collection<int, StandardNotam>
+     * @return Collection<int, NormalisedNotam>
      */
     protected function normaliseNotams(Response $response): Collection
     {
         return collect($response->object())
-            ->map(fn ($sourceNotam) => new StandardNotam(
+            ->map(fn ($sourceNotam) => new NormalisedNotam(
                 id: $sourceNotam->key,
                 fullText: $sourceNotam->all,
                 source: json_encode($sourceNotam),
